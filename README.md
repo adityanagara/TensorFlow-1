@@ -57,3 +57,11 @@ Hello, TensorFlow!
 (tensorflow)$ deactivate
 $  # Your prompt should change back
 ```
+
+## Use with Jupyter and IPython
+To use tensorflow with IPython or Jupyter it may be necessary to install IPython Jupyter into the tensorflow environment:
+
+```
+(tensorflow)$ conda install ipython
+(tensorflow)$ pip install jupyter
+```
