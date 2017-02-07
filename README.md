@@ -1,5 +1,5 @@
 # TensorFlow
-Learning TensorFlow, Instalation and Examples
+Learning TensorFlow, Installation and Examples
 
 ## Installing TensorFlow in Windows with Anaconda 
 This tutorial is based on the TensorFlow Anaconda install tutorial [here](https://www.tensorflow.org/get_started/os_setup), but needed some changes to make it work.
