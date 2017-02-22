@@ -1,14 +1,14 @@
 
 In the Deep Learning study group I am a part of - see more [HERE](http://dianapfeil.com/machine%20learning/2017/02/19/deep-learning-reading-group/). 
-The past two weeks we focused on Deep Feedfoward Networks with a reading assigment and progarmming assigment.
+The past two weeks we focused on Deep Feedforward Networks with a reading assignment and programming assignment.
 
 **Reading:** [Chapter 6 Deep learning book](http://www.deeplearningbook.org/contents/mlp.html)
 
-**Implementation:** Feedfoward Network with MNIST dataset
+**Implementation:** Feedforward Network with MNIST dataset
 
-### Summary of Feedfoward Networks
+### Summary of Feedforward Networks
 
-Summary of Chapter 6 (Provided by Diana Pfiel and some minor aditions of mine):
+Summary of Chapter 6 (Provided by Diana Pfiel and some minor additions of mine):
 
 Feedforward neural networks can be thought of as a way to learn general nonlinear functions. 
 They refer to these as MLPs (multi-layer perceptrons). There's a theorem that a 1-layer MLP can represent an arbitrary function!!
