@@ -3,6 +3,7 @@ In the Deep Learning study group I am a part of - see more [HERE](http://dianapf
 The past two weeks we focused on Deep Feedfoward Networks with a reading assigment and progarmming assigment.
 
 **Reading:** [Chapter 6 Deep learning book](http://www.deeplearningbook.org/contents/mlp.html)
+
 **Implementation:** Feedfoward Network with MNIST dataset
 
 ### Summary of Feedfoward Networks
@@ -26,7 +27,10 @@ Non-differentiable points are okay in the activation function.
 **Hidden units** <- Just use relu, because it does not saturate. Has biological basis! 
 There are tons of other activation functions, but they don't make too much difference, so start with relu.
 
-Typical  activation functions:
-- Threshold $ \sum_{\forall i}{x_i^{2}} $
+Typical  activation functions: Threshold, Sigmoid, Tanh
+Problem is Saturation because gradient is too small --> Solution ReLU (rectified linear unit)
+
+Summary slides from Princeton [here](https://www.cs.princeton.edu/courses/archive/spring16/cos495/slides/DL_lecture1_feedforward.pdf)
+
                                                       
                                                       
