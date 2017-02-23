@@ -19,8 +19,8 @@ For best results:
 
 Optional arguments:
 - --learning_rate (Optimzer learning rate)
-- --hidden1 256 (Number of units in hidden layer 1)
-- --hidden2 128 (Number of units in hidden layer 2)
+- --hidden1 (Number of units in hidden layer 1)
+- --hidden2 (Number of units in hidden layer 2)
 - --max_steps (Number steps for training)    
 - --batch_size (Batch size.  Must divide evenly into the dataset sizes.)
 - --input_data_dir (Directory to put the input data.)
@@ -29,12 +29,16 @@ Optional arguments:
 - --debug (Use debugger to track down bad values during training.)
 
 ## mnist.py
-This file has the building components of the graph in 3 steps.
+This file has the building components for the graph in 3 main functions.
 
 ### 1. inference() 
-  Builds the graph as far as needed to return the tensor that would contain the output predictions..
+  Builds the graph as far as needed to return the tensor that would contain the output predictions.
+  
   It takes the images placeholder as input and builds on top of it two fully connected layers with **ReLU** activation followed by a ten node **linear** softmax layer specifying the output logits.
-
+ 
+```
+def inference(images, hidden1_units, hidden2_units):
+  """
   Args:
     images: Images placeholder, from inputs().
     hidden1_units: Size of the first hidden layer.
@@ -42,9 +46,7 @@ This file has the building components of the graph in 3 steps.
 
   Returns:
     softmax_linear: Output tensor with the computed logits.
-  
-```
-def inference(images, hidden1_units, hidden2_units):
+  """
   # Hidden 1
   with tf.name_scope('hidden1'):
     weights = tf.Variable(tf.truncated_normal([IMAGE_PIXELS, hidden1_units], stddev=1.0 / math.sqrt(float(IMAGE_PIXELS))), name='weights')
