@@ -1,6 +1,6 @@
 ##Tutorial on simple MLP MNIST implementation
 
-TensorFlow feedfoward neural network for classification of the MNIST data set.
+TensorFlow feedforward neural network for classification of the MNIST data set.
 
 Two files:
 - [mnist.py](https://github.com/adrifloresm/TensorFlow/blob/master/Feedforward%20Networks/mnist.py)
@@ -13,6 +13,9 @@ Tensorflow 1.0
 
 Run command:
 `python fully_connected_feed.py`
+
+For TensorBoard run following command and open in your browser provided address:
+`tensorboard --logdir=/tmp/tensorflow/mnist/logs/fully_connected_feed`
 
 For best results:
 `python fully_connected_feed.py --learning_rate 0.2 --hidden1 256 --hidden2 128`  
@@ -84,9 +87,9 @@ def inference(images, hidden1_units, hidden2_units):
   return tf.reduce_mean(cross_entropy, name='xentropy_mean')
  ```
 
-First, cross entropy op (`tf.nn.sparse_softmax_cross_entropy_with_logits`) computes sparse softmax cross enotropy between logits and labels, i.e. measures probability error in discrete classification (classes are mutually exclusive).
+First, cross entropy op (`tf.nn.sparse_softmax_cross_entropy_with_logits`) computes sparse softmax cross entropy between logits and labels, i.e. measures probability error in discrete classification (classes are mutually exclusive).
 
-Second, tf.reduce_mean averages the cross entropy values across the batch dimension (the first dimension) as the total loss.
+Second, `tf.reduce_mean` averages the cross entropy values across the batch dimension (the first dimension) as the total loss.
 
 ### 3. training() 
 Sets up the training ops required to compute and apply gradients.
@@ -151,7 +154,7 @@ After everything is built, run the Op to initialize the variables. (`sess.run(in
   
 ### Training Loop
 The graph is run here.
-- Start tarining loop
+- Start training loop
 ``` python
   for step in xrange(FLAGS.max_steps):
       start_time = time.time()
@@ -186,7 +189,7 @@ The graph is run here.
         checkpoint_file = os.path.join(FLAGS.log_dir, 'model.ckpt')
         saver.save(sess, checkpoint_file, global_step=step)
  ```
-- Model evaluation every 1000 steps with the `do_eval()` function, called three times for training, validadtion and test datasets.
+- Model evaluation every 1000 steps with the `do_eval()` function, called three times for training, validation and test datasets.
 ```python
         # Evaluate against the training set.
         print('Training Data Eval:')
