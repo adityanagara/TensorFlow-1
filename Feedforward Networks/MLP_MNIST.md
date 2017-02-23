@@ -130,39 +130,47 @@ Train MNIST for a number of steps.
 - Generate placeholders for the images and labels in accordance to batch size. ` images_placeholder, labels_placeholder = placeholder_inputs(FLAGS.batch_size)`
 - Call all the functions to build the graph from mnist.py.
    Build a Graph that computes predictions from the inference model. `logits = mnist.inference(images_placeholder, FLAGS.hidden1, FLAGS.hidden2)`
-   -Add to the Graph the Ops for loss calculation. `loss = mnist.loss(logits, labels_placeholder)`
-   -Add to the Graph the Ops that calculate and apply gradients. `train_op = mnist.training(loss, FLAGS.learning_rate)`
-   -Add the Op to compare the logits to the labels during evaluation. `eval_correct = mnist.evaluation(logits, labels_placeholder)`
+   - Add to the Graph the Ops for loss calculation. `loss = mnist.loss(logits, labels_placeholder)`
+   - Add to the Graph the Ops that calculate and apply gradients. `train_op = mnist.training(loss, FLAGS.learning_rate)`
+   - Add the Op to compare the logits to the labels during evaluation. `eval_correct = mnist.evaluation(logits, labels_placeholder)`
 - For TensorBoard, build the summary Tensor based on the TF collection of Summaries. `summary = tf.summary.merge_all()`
 - Initialize variables Op (`init = tf.global_variables_initializer()`)
 - Create a saver for writing training checkpoints. (`saver = tf.train.Saver()`)
 - Create a session for running Ops on the Graph. (`sess = tf.Session()`)
 
-To enable debugging, I use [TensorFlow Debugger (tfdbg)](https://www.tensorflow.org/versions/master/how_tos/debugger/), wrap the Session object with a debugger code below when the --debug flag is provided.
-``if FLAGS.debug:
+To enable debugging (when the --debug flag is provided), I use [TensorFlow Debugger (tfdbg)](https://www.tensorflow.org/versions/master/how_tos/debugger/), wrap the Session object with a debugger code below.
+``` python
+if FLAGS.debug:
     	sess = tf_debug.LocalCLIDebugWrapperSession(sess)
-    	sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan) ``
+    	sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan) 
+ ```
 
 - Instantiate a SummaryWriter to output summaries and the Graph. (`summary_writer = tf.summary.FileWriter(FLAGS.log_dir, sess.graph)`)
 
-And then after everything is built, run the Op to initialize the variables. (`sess.run(init)`)
+After everything is built, run the Op to initialize the variables. (`sess.run(init)`)
   
 ### Training Loop
 The graph is run here.
 - Start tarining loop
- ` for step in xrange(FLAGS.max_steps):
-      start_time = time.time()`
+``` python
+  for step in xrange(FLAGS.max_steps):
+      start_time = time.time()
+ ```
  
 -  Fill a feed dictionary with the actual set of images and labels for this particular training step.
-      `feed_dict = fill_feed_dict(data_sets.train, images_placeholder, labels_placeholder)`
+```python
+ feed_dict = fill_feed_dict(data_sets.train, images_placeholder, labels_placeholder)
+```
       
 - Run one step of the model.
-Note: "sess.run() returns a tuple with two items. Each Tensor in the list of values to fetch corresponds to a numpy array in the returned tuple, filled with the value of that tensor during this step of training. Since train_op is an Operation with no output value, the corresponding element in the returned tuple is None and, thus, discarded. However, the value of the loss tensor may become NaN if the model diverges during training, so we capture this value for logging."
-      `_, loss_value = sess.run([train_op, loss],feed_dict=feed_dict)`
-      `duration = time.time() - start_time`
-
-- Write summaries and print overviews every 100 steps. Also perform necessary updtes to events files to use TensorBoard visualization.
+   - Note: "sess.run() returns a tuple with two items. Each Tensor in the list of values to fetch corresponds to a numpy array in the returned tuple, filled with the value of that tensor during this step of training. Since train_op is an Operation with no output value, the corresponding element in the returned tuple is None and, thus, discarded. However, the value of the loss tensor may become NaN if the model diverges during training, so we capture this value for logging."
+```python
+      _, loss_value = sess.run([train_op, loss],feed_dict=feed_dict)`
+      `duration = time.time() - start_time
 ```
+
+- Write summaries and print overviews every 100 steps. Also perform necessary updates to events files to use TensorBoard visualization.
+```python
       if step % 100 == 0:
         # Print status to stdout.
         print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value, duration))
@@ -170,16 +178,16 @@ Note: "sess.run() returns a tuple with two items. Each Tensor in the list of val
         summary_str = sess.run(summary, feed_dict=feed_dict)
         summary_writer.add_summary(summary_str, step)
         summary_writer.flush()
-       ```
+```
 - Save checkpoint to be able to restore model (`saver.restore(sess, FLAGS.train_dir)`) for further evaluation.        
-    ```   
+```python   
       # Save a checkpoint and evaluate the model periodically.
       if (step + 1) % 1000 == 0 or (step + 1) == FLAGS.max_steps:
         checkpoint_file = os.path.join(FLAGS.log_dir, 'model.ckpt')
         saver.save(sess, checkpoint_file, global_step=step)
-        ```
-  - Model Evaluation every 1000 steps with the `do_eval()` function, called three times for training, validadtion and test datasets.
-  ```
+ ```
+- Model evaluation every 1000 steps with the `do_eval()` function, called three times for training, validadtion and test datasets.
+```python
         # Evaluate against the training set.
         print('Training Data Eval:')
         do_eval(sess,
@@ -203,16 +211,17 @@ Note: "sess.run() returns a tuple with two items. Each Tensor in the list of val
                 data_sets.test)
 ```
  
- Other functions:
+#### Other functions:
  
- - Evaluation function, runs one evaluation against the full epoch of data.
+- **The Evaluation function do_eval()** runs one evaluation against the full epoch of data.
  
- ```
+```python
 def do_eval(sess,
             eval_correct,
             images_placeholder,
             labels_placeholder,
             data_set):
+ """
   Args:
     sess: The session in which the model has been trained.
     eval_correct: The Tensor that returns the number of correct predictions.
@@ -233,9 +242,10 @@ def do_eval(sess,
   print('  Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
         (num_examples, true_count, precision))
   ```
-  - Feed directory. Fills the feed_dict for training the given step. A python dictionary object is then generated with the placeholders as keys and the representative feed tensors as values.
-  ```
+- **Feed directory, fill_feed_dict()** Fills the feed_dict for training the given step. A python dictionary object is then generated with the placeholders as keys and the representative feed tensors as values.
+```python
 def fill_feed_dict(data_set, images_pl, labels_pl):
+  """
   Args:
     data_set: The set of images and labels, from input_data.read_data_sets()
     images_pl: The images placeholder, from placeholder_inputs().
@@ -253,10 +263,11 @@ def fill_feed_dict(data_set, images_pl, labels_pl):
       labels_pl: labels_feed,
   }
   return feed_dict
-  ```
-  -placeholder_inputs. Generate placeholder variables to represent the input tensors.
-  ```
+```
+- **placeholder_inputs()**. Generates placeholder variables to represent the input tensors.
+```python
  def placeholder_inputs(batch_size):
+ """
   These placeholders are used as inputs by the rest of the model building
   code and will be fed from the downloaded data in the .run() loop.
 
@@ -276,4 +287,4 @@ def fill_feed_dict(data_set, images_pl, labels_pl):
   return images_placeholder, labels_placeholder
   ```
   
- - The main function reads input arguments - sets parameters and runs the app.  `def main(_):  tf.app.run`
+ - **The main function** reads input arguments - sets parameters and runs the app.  `def main(_):  tf.app.run`
