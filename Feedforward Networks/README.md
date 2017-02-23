@@ -1,10 +1,9 @@
 
-In the Deep Learning study group I am a part of - see more [HERE](http://dianapfeil.com/machine%20learning/2017/02/19/deep-learning-reading-group/). 
-The past two weeks we focused on Deep Feedforward Networks with a reading assignment and programming assignment.
+In the Deep Learning study group I am a part of - see more [HERE](http://dianapfeil.com/machine%20learning/2017/02/19/deep-learning-reading-group/), in the past two weeks we focused on Deep Feedforward Networks with a reading assignment and programming assignment.
 
 **Reading:** [Chapter 6 Deep learning book](http://www.deeplearningbook.org/contents/mlp.html)
 
-**Implementation:** Feedforward Network with MNIST dataset
+**Implementation:** Feedforward Network with MNIST dataset - See Tutorial [HERE](https://github.com/adrifloresm/TensorFlow/blob/master/Feedforward%20Networks/MLP_MNIST.md)
 
 ### Summary of Feedforward Networks
 
@@ -28,7 +27,8 @@ Non-differentiable points are okay in the activation function.
 There are tons of other activation functions, but they don't make too much difference, so start with relu.
 
 Typical  activation functions: Threshold, Sigmoid, Tanh
-Problem is Saturation because gradient is too small --> Solution ReLU (rectified linear unit)
+
+The problem with these is *Saturation* because gradient is too small --> Solution ReLU (rectified linear unit)
 
 Summary slides from Princeton [here](https://www.cs.princeton.edu/courses/archive/spring16/cos495/slides/DL_lecture1_feedforward.pdf)
 
