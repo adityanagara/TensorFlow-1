@@ -213,7 +213,7 @@ The graph is run here.
  
 #### Other functions:
  
-- **The Evaluation function do_eval()** runs one evaluation against the full epoch of data.
+- **do_eval()** runs one evaluation against the full epoch of data.
  
 ```python
 def do_eval(sess,
@@ -242,7 +242,7 @@ def do_eval(sess,
   print('  Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
         (num_examples, true_count, precision))
   ```
-- **Feed directory, fill_feed_dict()** Fills the feed_dict for training the given step. A python dictionary object is then generated with the placeholders as keys and the representative feed tensors as values.
+- **fill_feed_dict()** Fills the feed_dict for training of the given step. A python dictionary object is then generated with the placeholders as keys and the representative feed tensors as values.
 ```python
 def fill_feed_dict(data_set, images_pl, labels_pl):
   """
