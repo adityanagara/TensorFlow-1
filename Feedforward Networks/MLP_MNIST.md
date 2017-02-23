@@ -11,14 +11,19 @@ These files and tutorial are an extension on [TensorFlow Mechanics 101](https://
 Requirements:
 Tensorflow 1.0
 
-Run command:
+- Run command:
+
 `python fully_connected_feed.py`
 
-For TensorBoard run following command and open in your browser provided address:
+- For best results:
+
+`python fully_connected_feed.py --learning_rate 0.2 --hidden1 256 --hidden2 128`  
+
+- For TensorBoard run following command and open in your browser provided address:
+
 `tensorboard --logdir=/tmp/tensorflow/mnist/logs/fully_connected_feed`
 
-For best results:
-`python fully_connected_feed.py --learning_rate 0.2 --hidden1 256 --hidden2 128`  
+
 
 Optional arguments:
 - --learning_rate (Optimzer learning rate)
