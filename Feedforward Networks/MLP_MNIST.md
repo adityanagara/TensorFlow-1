@@ -127,10 +127,7 @@ Train MNIST for a number of steps.
 
 - Unpack Data:`data_sets = input_data.read_data_sets(FLAGS.input_data_dir, FLAGS.fake_data)`
 - Tell TensorFlow that the model will be built into the default Graph. ` with tf.Graph().as_default(): `
-- Generate placeholders for the images and labels in accordance to batch size.
-```python
-images_placeholder, labels_placeholder = placeholder_inputs(FLAGS.batch_size)
-```
+- Generate placeholders for the images and labels in accordance to batch size. ` images_placeholder, labels_placeholder = placeholder_inputs(FLAGS.batch_size)`
 - Call all the functions to build the graph from mnist.py.
    Build a Graph that computes predictions from the inference model. `logits = mnist.inference(images_placeholder, FLAGS.hidden1, FLAGS.hidden2)`
    -Add to the Graph the Ops for loss calculation. `loss = mnist.loss(logits, labels_placeholder)`
