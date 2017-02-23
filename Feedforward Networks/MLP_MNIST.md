@@ -94,19 +94,17 @@ Creates a summarizer to track the loss over time in TensorBoard.
 Creates an optimizer and applies the gradients to all trainable variables.
 
 The Op returned by this function is what must be passed to the `sess.run()` call to train the model.
-
-  Args:
-  
-    loss: Loss tensor, from loss().
-    
-    learning_rate: The learning rate to use for gradient descent.
-
-  Returns:
-  
-    train_op: The Op for training.
     
 ```python
 def training(loss, learning_rate):
+"""
+  Args:
+    loss: Loss tensor, from loss().
+    learning_rate: The learning rate to use for gradient descent.
+
+  Returns:
+    train_op: The Op for training.
+"""
   # Add a scalar summary for the snapshot loss.
   tf.summary.scalar('loss', loss)
   # Create the gradient descent optimizer with the given learning rate.
@@ -121,12 +119,13 @@ def training(loss, learning_rate):
  ```
    
 ## fully_connected_feed.py
-Train the Model.
+In this file, the magic happens... we train the model.
 
-def run_training():
+### def run_training():
+
 Train MNIST for a number of steps.
 
-- Unpack Data:`data_sets = input_data.read_data_sets(FLAGS.input_data_dir, FLAGS.fake_data)`
+- Unpack Data:```python data_sets = input_data.read_data_sets(FLAGS.input_data_dir, FLAGS.fake_data)```
 - Tell TensorFlow that the model will be built into the default Graph. ` with tf.Graph().as_default(): `
 - Generate placeholders for the images and labels in accordance to batch size `images_placeholder, labels_placeholder = placeholder_inputs(FLAGS.batch_size)`
 - Call all the functions to build the graph from mnist.py.
