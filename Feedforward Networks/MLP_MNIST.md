@@ -36,7 +36,7 @@ This file has the building components for the graph in 3 main functions.
   
   It takes the images placeholder as input and builds on top of it two fully connected layers with **ReLU** activation followed by a ten node **linear** softmax layer specifying the output logits.
  
-```
+```python
 def inference(images, hidden1_units, hidden2_units):
   """
   Args:
@@ -68,21 +68,23 @@ def inference(images, hidden1_units, hidden2_units):
 ```
 ### 2. loss() (aka. Cost)
  Calculates the loss from the logits (inference) and the labels.
-  Args:
+  
+```python
+ def loss(logits, labels):
+ """
+ Args:
     logits: Logits tensor, float - [batch_size, NUM_CLASSES].
     labels: Labels tensor, int32 - [batch_size].
 
   Returns:
     loss: Loss tensor of type float.
-
-```
- def loss(logits, labels):
+  """
   labels = tf.to_int64(labels)
   cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels, logits=logits, name='xentropy')
   return tf.reduce_mean(cross_entropy, name='xentropy_mean')
  ```
 
-First, cross entropy op (tf.nn.sparse_softmax_cross_entropy_with_logits) computes sparse softmax cross enotropy between logits and labels, i.e. measures probability error in discrete classification (classes are mutually exclusive).
+First, cross entropy op (`tf.nn.sparse_softmax_cross_entropy_with_logits`) computes sparse softmax cross enotropy between logits and labels, i.e. measures probability error in discrete classification (classes are mutually exclusive).
 
 Second, tf.reduce_mean averages the cross entropy values across the batch dimension (the first dimension) as the total loss.
 
@@ -94,13 +96,16 @@ Creates an optimizer and applies the gradients to all trainable variables.
 The Op returned by this function is what must be passed to the `sess.run()` call to train the model.
 
   Args:
+  
     loss: Loss tensor, from loss().
+    
     learning_rate: The learning rate to use for gradient descent.
 
   Returns:
+  
     train_op: The Op for training.
     
-```
+```python
 def training(loss, learning_rate):
   # Add a scalar summary for the snapshot loss.
   tf.summary.scalar('loss', loss)
